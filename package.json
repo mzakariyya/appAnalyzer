@@ -1,0 +1,26 @@
+{
+  "name": "npmlist",
+  "version": "0.1.0",
+  "description": "",
+  "bodyParser": true,
+  "framework": "none",
+  "healthCheck": false,
+  "main": "npmlist.js",
+  "keywords": [],
+  "author": "",
+  "maintainers": [],
+  "contributors": [],
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "preferGlobal": false,
+  "dependencies": {
+    "express": "*",
+    "line-reader": "*",
+    "async":"*"
+  },
+  "license": "",
+  "openurl": "*",
+  "express": "*"
+}
