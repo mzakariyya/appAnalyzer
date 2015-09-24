@@ -5,7 +5,7 @@
   "bodyParser": true,
   "framework": "none",
   "healthCheck": false,
-  "main": "npmlist.js",
+  "main": "npmlistCommand.js",
   "keywords": [],
   "author": "",
   "maintainers": [],
