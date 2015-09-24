@@ -9,14 +9,13 @@ Before attempting to run the command, make sure that your have the latest versio
 
 ```sh
 
-node 
-
+node npmlistCommand <'your app name'>
 
 ```
 
 ## Documentation
 
-For more information about using Node.js on Heroku, see this link:
+For more information about using Node.js, see this link:
 
 - [Node.js Documentation](https://nodejs.org/api/)
 
