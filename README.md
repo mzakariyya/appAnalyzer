@@ -5,7 +5,7 @@ A Node.js app called npmlist. It is used to collect a list of npm packages infor
 
 ## Running Locally
 
-Before attempting to run the command, make sure that your have the latest version of [Node.js](http://nodejs.org/). run 'npm install' to download the required modules
+Before attempting to run the command, make sure that your have the latest version of [Node.js](http://nodejs.org/). Run 'npm install' to download the required modules
 
 
 You need to have the email and the name of the app inside a text file. An example is shown below.
