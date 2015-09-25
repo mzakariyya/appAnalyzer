@@ -4,9 +4,7 @@
 
 var fs = require('fs'),
   lineReader = require('line-reader'),
-  execSync = require('exec-sync'),
-  exec = require('child_process').exec,child,
-  async = require('async');
+  execSync = require('exec-sync');
 
 run();
 
@@ -34,7 +32,6 @@ function run() {
     // split up the array into email and the app name 
     var array = line.toString().split("/");
 
-    // array looks like ['email', 'appName']
     // asign array items to variables.
     var email = array[0];
     var appName = array[1];
@@ -54,14 +51,14 @@ function run() {
     //read the json file
     fs.readFile(file, 'utf8', function(err, data) {
       if (err) {
-        console.log('Error ......: ' + err);
+        console.log('Error : ' + err);
         return;
       }
       // parse the json file and store in a 'data' object
       try {
         data = JSON.parse(data);
       } catch (e) {
-        alert(e); //error in the above string(in this case,yes)!
+        console.log('Error : ', e);
       }
 
       // create empty array to store the dependencies in
@@ -73,7 +70,6 @@ function run() {
 
       //check if array is present
       if (arr == null) {
-
         arr = "no arrow version found";
       }
 
@@ -84,7 +80,6 @@ function run() {
           output.push(key);
         }
       }
-
 
       // write date to the corresponding file
       fs.appendFileSync("report", 'Email: ' + email + '   ' + 'Name of app: ' + appName + "\n");
@@ -97,9 +92,8 @@ function run() {
 
         // write packages to file
         fs.appendFileSync("npmlist", pkge + "\n");
-
       }
-
+      
     }); // done with package.json
 
     // removes the app folder
@@ -111,5 +105,8 @@ function run() {
     }
 
   }); // end of line reader
+
+console.log('Node modules will be stored in the file "npmlist"')
+console.log('A summary of each app will be stored in the file "report"')
 
 } // end of run method
