@@ -13,6 +13,9 @@ node npmlistCommand <'your app name'>
 
 ```
 
+Node modules will be stored in the file "npmlist"
+A summary of each app will be stored in the file "report"
+
 ## Documentation
 
 For more information about using Node.js, see this link:
