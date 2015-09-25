@@ -64,7 +64,12 @@ function run() {
       // create empty array to store the dependencies in
       var output = [];
 
-      var hCheck = data.healthCheck;
+      try {
+        var hCheck = data.healthCheck;
+      } catch (e) {
+        var hCheck = 'healthCheck does not exist'
+      }
+      
       var allDependencies = data.dependencies;
       var arr = data.dependencies['arrow'];
 
