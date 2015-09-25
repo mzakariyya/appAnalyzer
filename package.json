@@ -16,8 +16,8 @@
   },
   "preferGlobal": false,
   "dependencies": {
-    "line-reader": "*",
-    "exec-sync": "*"
+    "line-reader": "0.2.4",
+    "exec-sync": "0.1.6"
   },
   "license": "",
   "openurl": "*",
