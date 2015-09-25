@@ -16,7 +16,6 @@
   },
   "preferGlobal": false,
   "dependencies": {
-    "express": "*",
     "line-reader": "*",
     "exec-sync": "*"
   },
