@@ -1,20 +1,12 @@
 # npmlist
 
 
-A Node.js app called npmlist. It is used to collect a list of npm packages information from apps that have been published
+A Node.js app called npmlist. It is used to collect a list of npm packages information from apps that have been published. run 'npm install
 
 ## Running Locally
 
 Before attempting to run the command, make sure that your have the latest version of [Node.js](http://nodejs.org/)
 
-
-To install the modules needed run:
-
-```sh
-
-npm install
-
-```
 
 You need to have the email and the name of the app inside a text file. An example is shown below.
 
