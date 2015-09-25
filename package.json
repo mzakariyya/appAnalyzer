@@ -19,8 +19,6 @@
     "express": "*",
     "line-reader": "*",
     "exec-sync": "*"
-    
-
   },
   "license": "",
   "openurl": "*",
