@@ -25,8 +25,15 @@ function run() {
     return false;
   }
 
-  execSync('echo " " > npmlist; ' + 'echo " " > report')
-    // instantiates the line reader with a callback
+  try {
+    execSync('echo " " > npmlist; ' + 'echo " " > report;' + 'echo " " > errors')
+  } catch (err) {
+    console.log('Something went wrong, details => ', e);
+    fs.appendFileSync("errors", 'error - > : ' + e + "\n");
+    return false;
+  }
+
+  // instantiates the line reader
   lineReader.eachLine(process.argv[2], function(line, last) {
 
     // split up the array into email and the app name 
@@ -38,12 +45,16 @@ function run() {
 
     // series of commands, called in an asyncronous mannner
     try {
-      execSync('appc cloud su ' + email)
-      execSync('appc cloud download ' + appName + '; mkdir ' + appName)
+      execSync('acs su ' + email)
+      execSync('acs download ' + appName + '; mkdir ' + appName)
+      console.log('downloading ' + appName + ' ...')
       execSync('tar -xf ' + appName + '*.tar.gz --strip-components=1 -C ' + appName)
+      execSync('chmod -R a+x ' + appName)
       execSync('rm ' + appName + '*.tar.gz')
     } catch (e) {
       console.log('Something went wrong, details => ', e);
+      fs.appendFileSync("errors", 'error - > : ' + e + "\n");
+      return true;
     }
 
     // get the package.json file
@@ -52,24 +63,24 @@ function run() {
     fs.readFile(file, 'utf8', function(err, data) {
       if (err) {
         console.log('Error : ' + err);
+        fs.appendFileSync("errors", 'error - > : ' + err + "\n");
         return;
       }
       // parse the json file and store in a 'data' object
       try {
         data = JSON.parse(data);
+        console.log('parsing JSON file')
       } catch (e) {
         console.log('Error : ', e);
+        fs.appendFileSync("errors", 'error - > : ' + e + "\n");
       }
 
       // create empty array to store the dependencies in
       var output = [];
-
-      try {
-        var hCheck = data.healthCheck;
-      } catch (e) {
-        var hCheck = 'healthCheck does not exist'
+      var hCheck = data.healthCheck;
+      if (hCheck == null) {
+        hCheck = false;
       }
-      
       var allDependencies = data.dependencies;
       var arr = data.dependencies['arrow'];
 
@@ -87,9 +98,9 @@ function run() {
       }
 
       // write date to the corresponding file
-      fs.appendFileSync("report", 'Email: ' + email + '   ' + 'Name of app: ' + appName + "\n");
-      fs.appendFileSync("report", 'HealthCheck: ' + hCheck + "\n");
-      fs.appendFileSync("report", 'Arrow version: ' + arr + "\n");
+      console.log('writing information to files')
+
+      fs.appendFileSync("report", 'Email: ' + email + ', ' + 'Name of app: ' + appName + ', ' + 'HealthCheck: ' + hCheck + ', ' + 'Arrow version: ' + arr + "\n");
 
       // loop over the output array and write the line to the npmlist text file.
       for (i = 0; i < output.length; i++) {
@@ -98,20 +109,33 @@ function run() {
         // write packages to file
         fs.appendFileSync("npmlist", pkge + "\n");
       }
-      
+
     }); // done with package.json
 
-    // removes the app folder
-    execSync('rm -rf ' + appName)
+    try {
+      // removes the app folder
+      execSync('rm -rf ' + appName)
+      console.log('removing ' + appName + ' folder')
+    } catch (e) {
+      console.log('Something went wrong, details => ', e);
+      fs.appendFileSync("errors", 'error - > : ' + e + "\n");
+      return true;
+    }
 
-    //console.log(last)
+    // check if it is last line
     if (last) {
-      execSync('sort -u -o npmlist npmlist')
+      try {
+        execSync('sort -u -o npmlist npmlist')
+      } catch (err) {
+        console.log('File does not exist');
+        return false;
+      }
     }
 
   }); // end of line reader
 
-console.log('Node modules will be stored in the file "npmlist"')
-console.log('A summary of each app will be stored in the file "report"')
+  console.log('Node modules will be stored in the file "npmlist"')
+  console.log('A summary of each app will be stored in the file "report"')
+  console.log('details of any errors that occur will be stored in the file "errors"')
 
 } // end of run method
