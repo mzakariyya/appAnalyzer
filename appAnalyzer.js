@@ -21,16 +21,17 @@ function run() {
   try {
     var fileCheck = fs.readFileSync(process.argv[2], null);
   } catch (err) {
-    console.log('File does not exist');
-    return false;
+    console.log('File error -> ' + err + "\n");
+    return true;
   }
 
   try {
+    // create necessary files
     execSync('echo " " > packageList; ' + 'echo " " > report;' + 'echo " " > errors')
   } catch (err) {
     console.log('Something went wrong, details => ', e);
     fs.appendFileSync("errors", 'error - > : ' + e + "\n");
-    return false;
+    return true;
   }
 
   // instantiates the line reader
@@ -43,6 +44,7 @@ function run() {
     var email = array[0];
     var appName = array[1];
 
+    // check if email is in a the correct format
     if(!email.indexOf('@') >= 0){
        console.log('the email ' + email + ' is not in a correct email format')
     }
@@ -72,6 +74,7 @@ function run() {
       }
       // parse the json file and store in a 'data' object
       try {
+        // parse the json file
         data = JSON.parse(data);
         console.log('parsing JSON file')
       } catch (e) {
