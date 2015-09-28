@@ -1,7 +1,7 @@
-# npmlist
+# appAnalyzer
 
 
-A Node.js app called npmlist. It is used to collect a list of npm packages information from apps that have been published.
+A Node.js app called appAnalyzer. It is used to collect a list of npm (node package manager) packages information from apps that have been published.
 
 ## Running Locally
 
@@ -23,8 +23,9 @@ To run the command, execute:
 node appAnalyzer <'filename'>
 ```
 
-Node modules will be stored in the file "npmlist"
+Node modules will be stored in the file "packageList"
 A summary of each app will be stored in the file "report"
+An erros that may occur will be stored in the file "errors'
 
 ## Documentation
 
