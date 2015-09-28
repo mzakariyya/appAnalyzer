@@ -23,7 +23,7 @@ To run the command, execute:
 node appAnalyzer <'filename'>
 ```
 
-Node modules will be stored in the file "packagelist"
+Node modules will be stored in the file "packageList"
 A summary of each app will be stored in the file "report"
 An erros that may occur will be stored in the file "errors'
 
