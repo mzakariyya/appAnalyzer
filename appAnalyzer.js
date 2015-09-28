@@ -93,7 +93,7 @@ function run() {
 
       //check if array is present
       if (arr == undefined) {
-        arr = "no arrow version found";
+        arr = "n/a";
       }
 
       // for every dependency in the dependency list, if the read dependency is 
