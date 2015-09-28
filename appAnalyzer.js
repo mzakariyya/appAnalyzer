@@ -26,7 +26,7 @@ function run() {
   }
 
   try {
-    execSync('echo " " > npmlist; ' + 'echo " " > report;' + 'echo " " > errors')
+    execSync('echo " " > packageList; ' + 'echo " " > report;' + 'echo " " > errors')
   } catch (err) {
     console.log('Something went wrong, details => ', e);
     fs.appendFileSync("errors", 'error - > : ' + e + "\n");
@@ -42,6 +42,10 @@ function run() {
     // asign array items to variables.
     var email = array[0];
     var appName = array[1];
+
+    if(!email.indexOf('@') >= 0){
+       console.log('the email ' + email + ' is not in a correct email format')
+    }
 
     // series of commands, called in an asyncronous mannner
     try {
@@ -78,14 +82,14 @@ function run() {
       // create empty array to store the dependencies in
       var output = [];
       var hCheck = data.healthCheck;
-      if (hCheck == null) {
+      if (hCheck == undefined) {
         hCheck = false;
       }
       var allDependencies = data.dependencies;
       var arr = data.dependencies['arrow'];
 
       //check if array is present
-      if (arr == null) {
+      if (arr == undefined) {
         arr = "no arrow version found";
       }
 
@@ -100,14 +104,14 @@ function run() {
       // write date to the corresponding file
       console.log('writing information to files')
 
-      fs.appendFileSync("report", 'Email: ' + email + ', ' + 'Name of app: ' + appName + ', ' + 'HealthCheck: ' + hCheck + ', ' + 'Arrow version: ' + arr + "\n");
+      fs.appendFileSync("report", email + ', ' + appName + ', ' + hCheck + ', ' + arr + "\n");
 
-      // loop over the output array and write the line to the npmlist text file.
+      // loop over the output array and write the line to the packageList text file.
       for (i = 0; i < output.length; i++) {
         pkge = output[i];
 
         // write packages to file
-        fs.appendFileSync("npmlist", pkge + "\n");
+        fs.appendFileSync("packageList", pkge + "\n");
       }
 
     }); // done with package.json
@@ -125,7 +129,7 @@ function run() {
     // check if it is last line
     if (last) {
       try {
-        execSync('sort -u -o npmlist npmlist')
+        execSync('sort -u -o packageList packageList')
       } catch (err) {
         console.log('File does not exist');
         return false;
@@ -134,7 +138,7 @@ function run() {
 
   }); // end of line reader
 
-  console.log('Node modules will be stored in the file "npmlist"')
+  console.log('Node modules will be stored in the file "packageList"')
   console.log('A summary of each app will be stored in the file "report"')
   console.log('details of any errors that occur will be stored in the file "errors"')
 
